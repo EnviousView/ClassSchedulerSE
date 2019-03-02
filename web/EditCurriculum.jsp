@@ -11,41 +11,11 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Editing a Curriculum</title> 
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
-        <script>
-            function addRow() {
-
-            var tableID="ticketCreate";
-            var table = document.getElementById(tableID);
-            var rowCount = table.rows.length;
-
-            if(rowCount<9){
-                //You declared var in front of the same variable twice. Don't do that.
-                //You were appending cells inside existing cell. Add them to row instead.
-                var row = table.insertRow(rowCount);
-                var cell1 = row.insertCell(0);
-                var element1 = document.createElement('input');
-                element1.type="text";
-                cell1.appendChild(element1);
-                row.insertCell(1);
-                row.insertCell(2);
-            }
-        }
-
-        function removeRow(){
-            var tableID="ticketCreate";
-            var table = document.getElementById(tableID);
-            var rowCount = table.rows.length;
-
-            if(rowCount>1){   
-                //you had type in deletRow. Also, you can pass in -1 to remove the last row        
-                table.deleteRow(-1); 
-            }
-        }       
-        </script>    
+        
     </head>
     <body>
-        <form action="EditCurriculumUSTArki" method="post">
-            <table class="table table-borderless" id="ticketCreate">
+        <form action="UpdateCurriculumUSTArki" method="post">
+            <table class="table table-borderless order-list" id="myTable">
             <tr>
                 <th scope="col">Course Code</th>
                 <th scope="col">Course Name</th>
@@ -108,21 +78,49 @@
                 <td><input type="text" class="form-control" name="day1" value="<%out.println(day1);%>"></td>
                 <td><input type="text" class="form-control" name="day2" value="<%out.println(day2);%>"></td>
                 <td><input type="text" class="form-control" name="day3" value="<%out.println(day3);%>"></td>
+                <td><input type="button" class="ibtnDel btn btn-md btn-danger " value="Delete"></td>
             </tr>
-            <% } %>
-            <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td><input type="button" class="btn btn-grey" id="addrow" value="Add Row" onclick="addRow()"></td>
-                <td></td>
-                <td><input type="submit" value="Submit" name="Submit" class="btn btn-grey"></td>
-            </tr>       
+            <% } %>                           
             </table>
+            <div class="row align-items-center justify-content-center">
+                <input type="submit" value="Select" name="manageCurr" class="btn btn-grey">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <input type="submit" value="Edit" name="manageCurr" class="btn btn-grey">
+            </div>  
         </form>
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
+        <script>
+            $(document).ready(function () {
+            
 
+            $("#addrow").on("click", function (event) 
+                {
+                    var newRow = $("<tr>");
+                    var cols = "";
+
+                    cols += '<td><input type="text" class="form-control" name="courseCode"/></td>';
+                    cols += '<td><input type="text" class="form-control" name="courseName"/></td>';
+                    cols += '<td><input type="text" class="form-control" name="courseStudUnits"/></td>';
+                    cols += '<td><input type="text" class="form-control" name="courseLecUnits"/></td>';
+                    cols += '<td><input type="text" class="form-control" name="courseNumDays"/></td>';
+                    cols += '<td><input type="text" class="form-control" name="day0"/></td>';
+                    cols += '<td><input type="text" class="form-control" name="day1"/></td>';
+                    cols += '<td><input type="text" class="form-control" name="day2"/></td>';
+                    cols += '<td><input type="text" class="form-control" name="day3"/></td>';
+
+                    cols += '<td><input type="button" class="ibtnDel btn btn-md btn-danger " value="Delete"></td>';
+                    newRow.append(cols);
+                    $("table.order-list").append(newRow);
+                });
+
+            $("table.order-list").on("click", ".ibtnDel", function (event) {
+                $(this).closest("tr").remove();       
+                
+            });
+
+
+        });
+        </script>    
     </body>
 </html>

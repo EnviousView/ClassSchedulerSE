@@ -24,6 +24,10 @@
         <servlet-name>EditCurriculum</servlet-name>
         <servlet-class>com.system.web.EditCurriculum</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>UpdateCurriculum</servlet-name>
+        <servlet-class>com.system.web.UpdateCurriculum</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>InputServlet</servlet-name>
         <url-pattern>/InputServletArkiUST</url-pattern>
@@ -47,6 +51,10 @@
     <servlet-mapping>
         <servlet-name>EditCurriculum</servlet-name>
         <url-pattern>/EditCurriculumUSTArki</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UpdateCurriculum</servlet-name>
+        <url-pattern>/UpdateCurriculumUSTArki</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
