@@ -6,8 +6,7 @@ import com.system.model.DBConnectionManager;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.*;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -24,9 +23,10 @@ public class UpdateCurriculum extends HttpServlet {
     private Connection con = null;
     private PreparedStatement ps = null;
     private ResultSet rs = null;
-    private String strCourseCode, strCourseName, strStudUnit, strLecUnit, strPairingDays;
-    private int nNumDays;
-    private float fDay1, fDay2, fDay3;        
+    private String strCourseCode, strCourseName, strPairingDays;
+    private int nNumDays, nStudUnit, nLecUnit;
+    private float fDay1, fDay2, fDay3;
+    private List supClumList = new ArrayList();
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -137,8 +137,22 @@ public class UpdateCurriculum extends HttpServlet {
                 rs = ps.executeQuery();
                 while(rs.next())
                 {
-                    rs.getString("Course_Code");
-                }    
+                    strCourseName = rs.getString("Course_Code");
+                    strCourseCode = rs.getString("Course_Name");
+                    nStudUnit = rs.getInt("Studio_Unit");
+                    nLecUnit = rs.getInt("Lec_Unit");
+                    nNumDays = rs.getInt("No_of_Days");
+                    strPairingDays = rs.getString("Pairing_Days");
+                    fDay1 = rs.getFloat("Day1");
+                    fDay2 = rs.getFloat("Day2");
+                    fDay3 = rs.getFloat("Day3");
+                    
+                    CurriculumList cl = new CurriculumList();
+                    supClumList = cl.addCurriculum(strCourseCode, strCourseName, nStudUnit, nLecUnit, nNumDays, strPairingDays, fDay1, fDay2, fDay3);                    
+                }  
+                ssn.setAttribute("supClumList", supClumList);
+                RequestDispatcher rd = request.getRequestDispatcher("AssignRoom.jsp");
+                rd.forward(request, response);
             }
         }
         catch(Exception e) 
@@ -146,7 +160,20 @@ public class UpdateCurriculum extends HttpServlet {
             e.printStackTrace();
         }
         finally
-        {            
+        {
+            if(rs != null)
+            {
+                try
+                {
+                    System.out.println("RESULT SET IS CLOSED");
+                    rs.close();
+                    
+                }
+                catch(SQLException ex)
+                {
+                    System.out.println("RESULT SET IS CLOSED");
+                }    
+            }            
             if(ps != null)
             {
                 try

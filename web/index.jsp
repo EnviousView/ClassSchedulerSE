@@ -7,10 +7,18 @@
         
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
         <link rel ="stylesheet" type ="text/css" href ="design/styles.css">
+        <style>
+            .div-design
+            {
+                height: 107px;
+                background-color: maroon;
+                position: relative;               
+            }
+        </style>    
     </head>
     <body>
-    <div class = "main-header">
-    	<img src = "design/architecture.png" height = "85" width = "85" style = "float: left" alt = "arch_logo">
+    <div class = "main-header text-white div-design">
+    	<img src = "UST-Seal-College-of-Architecture.jpg" height = "85" width = "85" style = "float: left" alt = "arch_logo">
         <h1>COLLEGE OF ARCHITECTURE</h1>
         <h5>CLASS SCHEDULER</h5>
     </div>
