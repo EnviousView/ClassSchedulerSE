@@ -23,28 +23,35 @@ public class UpdateCurriculum extends HttpServlet {
     
     private Connection con = null;
     private PreparedStatement ps = null;
-    
+    private ResultSet rs = null;
+    private String strCourseCode, strCourseName, strStudUnit, strLecUnit, strPairingDays;
+    private int nNumDays;
+    private float fDay1, fDay2, fDay3;        
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            String[] sCrsCode = request.getParameterValues("courseCode");
-            String[] sCrsName = request.getParameterValues("courseName");
-            String[] sStudUnits = request.getParameterValues("courseStudUnits");
-            String[] sLecUnits = request.getParameterValues("courseLecUnits");
-            String[] sNumDays = request.getParameterValues("courseNumDays");
-            String[] sPairDays = request.getParameterValues("pairingDays");
-            String[] sDay1 = request.getParameterValues("day1");
-            String[] sDay2 = request.getParameterValues("day2");
-            String[] sDay3 = request.getParameterValues("day3");
-            HttpSession ssn = request.getSession(false);
-            
-            if(ssn == null)
-            {
-                ssn = request.getSession();
-            }
-            List clumList = (List)ssn.getAttribute("selectedClumList");            
-            String yearID =  (String) ssn.getAttribute("selectedYrId");                  
+        String btnAction = request.getParameter("btnManage");
+        String[] sCrsCode = request.getParameterValues("courseCode");
+        String[] sCrsName = request.getParameterValues("courseName");
+        String[] sStudUnits = request.getParameterValues("courseStudUnits");
+        String[] sLecUnits = request.getParameterValues("courseLecUnits");
+        String[] sNumDays = request.getParameterValues("courseNumDays");
+        String[] sPairDays = request.getParameterValues("pairingDays");
+        String[] sDay1 = request.getParameterValues("day1");
+        String[] sDay2 = request.getParameterValues("day2");
+        String[] sDay3 = request.getParameterValues("day3");
+        DBConnectionManager dbconn = new DBConnectionManager();
+        con = dbconn.getConnection();
+        HttpSession ssn = request.getSession(false);
+        if(ssn == null)
+        {
+            ssn = request.getSession();
+        }
+        List clumList = (List)ssn.getAttribute("selectedClumList");            
+        String yearID =  (String) ssn.getAttribute("selectedYrId"); 
+        if(btnAction.equals("Save"))
+        {                
             for(int i = 0;i < sCrsCode.length; i++)
             {
                 String[] isCrsCode = sCrsCode[i].split(",");
@@ -65,8 +72,7 @@ public class UpdateCurriculum extends HttpServlet {
                         while(it.hasNext())
                         {
                             Curriculum clum = (Curriculum)it.next();
-                            DBConnectionManager dbconn = new DBConnectionManager();
-                            con = dbconn.getConnection();
+                            
                             if(clumList.contains(clum.getCourseCode()))
                             {    
                                 String query = "UPDATE Curriculum SET Course_Code = ?, Course_Name = ?,Studio_Unit = ?,Lec_Unit = ?,No_of_Days = ?,Pairing_Days = ?, Day1 = ?,Day2 = ?,Day3 = ? WHERE CourseCode = ?;";
@@ -119,43 +125,54 @@ public class UpdateCurriculum extends HttpServlet {
                                 }
                             }
                         }
-                        ssn.setAttribute("curriculumList", rcurriculumList);
+                        RequestDispatcher rd = request.getRequestDispatcher("EditCurriculum.jsp");
+                        rd.forward(request, response);
                     }
                 }                
             }
-            catch(Exception e) 
+            else
             {
-                e.printStackTrace();
-            }
-            finally
-            {            
-                if(ps != null)
+                String dbQuery = "SELECT Course_Code,Course_Name,Studio_Unit,Lec_Unit,No_of_Days,Pairing_Days,Day1,Day2,Day3 From Curriculum WHERE yearID= ?";
+                ps = con.prepareStatement(dbQuery);
+                rs = ps.executeQuery();
+                while(rs.next())
                 {
-                    try
-                    {
-                        System.out.println("PREPARED STATEMENT IS CLOSED");
-                        ps.close();
-                    }
-                    catch(SQLException ex)
-                    {
-                        ex.printStackTrace();
-                    }    
-                }
-                if(con != null)
-                {
-                    try
-                    {
-                        System.out.println("CONNECTION IS CLOSED");
-                        con.close();
-                    }
-                    catch(SQLException ex)
-                    {
-                        ex.printStackTrace();
-                    }    
+                    rs.getString("Course_Code");
                 }    
             }
-    }
-    
+        }
+        catch(Exception e) 
+        {
+            e.printStackTrace();
+        }
+        finally
+        {            
+            if(ps != null)
+            {
+                try
+                {
+                    System.out.println("PREPARED STATEMENT IS CLOSED");
+                    ps.close();
+                }
+                catch(SQLException ex)
+                {
+                    ex.printStackTrace();
+                }    
+            }
+            if(con != null)
+            {
+                try
+                {
+                    System.out.println("CONNECTION IS CLOSED");
+                    con.close();
+                }
+                catch(SQLException ex)
+                {
+                    ex.printStackTrace();
+                }    
+            }    
+        }
+    }   
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**

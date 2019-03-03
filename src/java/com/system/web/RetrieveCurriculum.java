@@ -73,7 +73,7 @@ public class RetrieveCurriculum extends HttpServlet {
                 
                 dbQuery = "SELECT yearID FROM YearLevel WHERE Year_Lvl = 3";
                 stmt = con.prepareStatement(dbQuery);
-                ResultSet rs = stmt.executeQuery();
+                rs = stmt.executeQuery();
                 while(rs.next())
                 {
                     yearID = rs.getString("yearID");                                      
@@ -90,7 +90,7 @@ public class RetrieveCurriculum extends HttpServlet {
                 
                 dbQuery = "SELECT yearID FROM YearLevel WHERE Year_Lvl = 4";
                 stmt = con.prepareStatement(dbQuery);
-                ResultSet rs = stmt.executeQuery();
+                rs = stmt.executeQuery();
                 while(rs.next())
                 {
                     yearID = rs.getString("yearID");                                      
@@ -107,7 +107,7 @@ public class RetrieveCurriculum extends HttpServlet {
                 
                 dbQuery = "SELECT yearID FROM YearLevel WHERE Year_Lvl = 5";
                 stmt = con.prepareStatement(dbQuery);
-                ResultSet rs = stmt.executeQuery();
+                rs = stmt.executeQuery();
                 while(rs.next())
                 {
                     yearID = rs.getString("yearID");                                      

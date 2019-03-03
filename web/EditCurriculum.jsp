@@ -59,7 +59,8 @@
             <% } %>                           
             </table>
             <div class="row align-items-center justify-content-center">
-                <input type="submit" value="Save" name="btnUpdate" class="btn btn-grey">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <input type="submit" value="Select" name="btnManage" class="btn btn-grey">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <input type="submit" value="Save" name="btnManage" class="btn btn-grey">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <input type="button" value="Add Course" name="btnAdd" class="btn btn-grey"  id="addrow">
             </div>  
         </form>
@@ -121,13 +122,7 @@
             $("table.order-list").on("click", ".ibtnDel", function (event) {
                 $(this).closest("tr").remove();       
                 
-            });
-                var id = $(this).closest("tr").find('td:eq(0)').text();
-                alert(id);
-
-            
-
-
+            });    
         });
         </script>    
     </body>
