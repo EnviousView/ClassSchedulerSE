@@ -44,47 +44,23 @@
                   float day2 = clum.getDay2();
                   float day3 = clum.getDay3();                  
                 %>
-                <td><input type="text" class="form-control" name="courseCode" value="<%out.println(courseCode);%>"></td>
-                <td><input type="text" class="form-control" name="courseName" value="<%out.println(courseName);%>"></td>
-                <td><input type="text" class="form-control" name="courseStudUnits" value="<%out.println(studUnit);%>"></td>
-                <td><input type="text" class="form-control" name="courseLecUnits" value="<%out.println(lecUnit);%>"></td>
-                <td><input type="text" class="form-control" name="courseNumDays" value="<%out.println(numofDays);%>"></td>
-                <td>
-                    <select class="form-control form-control-sm" name="pairingDays">
-                        <option value="<%out.println(pairingDays);%>" selected><%out.println(pairingDays);%></option>
-                        <option value="M">Monday</option>
-                        <option value="T">Tuesday</option>
-                        <option value="W">Wednesday</option>
-                        <option value="Th">Thursday</option>
-                        <option value="F">Friday</option>
-                        <option value="S">Saturday</option>
-                        <option value="M-T">M-T</option>
-                        <option value="M-W">M-W</option>
-                        <option value="M-Th">M-Th</option>
-                        <option value="M-F">M-F</option>
-                        <option value="M-S">M-S</option>
-                        <option value="T-W">T-W</option>
-                        <option value="T-Th">T-Th</option>
-                        <option value="T-F">T-F</option>
-                        <option value="T-S">T-S</option>
-                        <option value="W-Th">W-Th</option>
-                        <option value="W-F">W-F</option>
-                        <option value="W-S">W-S</option>
-                        <option value="Th-F">Th-F</option>
-                        <option value="Th-S">Th-S</option>
-                        <option value="F-S">F-S</option>
-                    </select>
-                </td>
-                <td><input type="text" class="form-control" name="day1" value="<%out.println(day1);%>"></td>
-                <td><input type="text" class="form-control" name="day2" value="<%out.println(day2);%>"></td>
-                <td><input type="text" class="form-control" name="day3" value="<%out.println(day3);%>"></td>
+                <td><%out.print(courseCode); %></td>
+                <td><%out.print(courseName); %></td>
+                <td><%out.print(studUnit); %></td>
+                <td><%out.print(lecUnit); %></td>
+                <td><%out.print(numofDays); %></td>
+                <td><%out.print(pairingDays); %></td>
+                <td><%out.print(day1); %></td>
+                <td><%out.print(day2); %></td>
+                <td><%out.print(day3); %></td>
+                <td><input type="button" class="btn btn-grey " id="editrow" value="Edit"></td>
                 <td><input type="button" class="ibtnDel btn btn-md btn-danger " value="Delete"></td>
             </tr>
             <% } %>                           
             </table>
             <div class="row align-items-center justify-content-center">
-                <input type="submit" value="Select" name="manageCurr" class="btn btn-grey">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <input type="submit" value="Edit" name="manageCurr" class="btn btn-grey">
+                <input type="submit" value="Save" name="btnUpdate" class="btn btn-grey">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <input type="button" value="Add Course" name="btnAdd" class="btn btn-grey"  id="addrow">
             </div>  
         </form>
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
@@ -99,7 +75,7 @@
                     var newRow = $("<tr>");
                     var cols = "";
 
-                    cols += '<td><input type="text" class="form-control" name="courseCode"/></td>';
+                    cols += '<td><input type="text" class="form-control" name="courseCode" value=""/></td>';
                     cols += '<td><input type="text" class="form-control" name="courseName"/></td>';
                     cols += '<td><input type="text" class="form-control" name="courseStudUnits"/></td>';
                     cols += '<td><input type="text" class="form-control" name="courseLecUnits"/></td>';
@@ -113,11 +89,43 @@
                     newRow.append(cols);
                     $("table.order-list").append(newRow);
                 });
+            $("#editrow").on("click", function (event) 
+                {
+                    $(this).closest("tr").remove();
+                    var newRow = $("<tr>");
+                    var cols = "";
+                    var cN = $(this).closest("tr").find('td:eq(0)').text();
+                    var cC = $(this).closest("tr").find('td:eq(1)').text();
+                    var sU = $(this).closest("tr").find('td:eq(2)').text();
+                    var lU = $(this).closest("tr").find('td:eq(3)').text();
+                    var nD = $(this).closest("tr").find('td:eq(4)').text();
+                    var pD = $(this).closest("tr").find('td:eq(5)').text();
+                    var d1 = $(this).closest("tr").find('td:eq(6)').text();
+                    var d2 = $(this).closest("tr").find('td:eq(7)').text();
+                    var d3 = $(this).closest("tr").find('td:eq(8)').text();
+                    
+                    cols += '<td><input type="text" class="form-control" name="courseCode" value="' + cN +'"/></td>';
+                    cols += '<td><input type="text" class="form-control" name="courseName" value="' + cC +'"/></td>';
+                    cols += '<td><input type="text" class="form-control" name="courseStudUnits" value="' + sU +'"/></td>';
+                    cols += '<td><input type="text" class="form-control" name="courseLecUnits" value="' + lU +'"/></td>';
+                    cols += '<td><input type="text" class="form-control" name="courseNumDays" value="' + nD +'"/></td>';
+                    cols += '<td><input type="text" class="form-control" name="day0" value="' + pD +'"/></td>';
+                    cols += '<td><input type="text" class="form-control" name="day1" value="' + d1 +'"/></td>';
+                    cols += '<td><input type="text" class="form-control" name="day2" value="' + d2 +'"/></td>';
+                    cols += '<td><input type="text" class="form-control" name="day3" value="' + d3 +'"/></td>';
 
+                    cols += '<td><input type="button" class="ibtnDel btn btn-md btn-danger " value="Delete"></td>';
+                    newRow.append(cols);
+                    $("table.order-list").append(newRow);
+                });
             $("table.order-list").on("click", ".ibtnDel", function (event) {
                 $(this).closest("tr").remove();       
                 
             });
+                var id = $(this).closest("tr").find('td:eq(0)').text();
+                alert(id);
+
+            
 
 
         });

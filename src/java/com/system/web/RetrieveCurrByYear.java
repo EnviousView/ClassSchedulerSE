@@ -58,6 +58,7 @@ public class RetrieveCurrByYear extends HttpServlet {
             }
             //System.out.println(courseCode);
             ssn.setAttribute("selectedClumList", cl);
+            ssn.setAttribute("selectedYrId", yearId);
             RequestDispatcher rd = request.getRequestDispatcher("SelectedCurrByYear.jsp");
             rd.forward(request, response);
         }
