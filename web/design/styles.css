@@ -1,0 +1,12 @@
+
+.main-header {
+	border: hidden;
+	background-color: maroon;
+	padding-bottom: 3px;
+}
+.card-header {
+	background-color: maroon;
+}
+h5, h1 {
+	color: white;
+}
