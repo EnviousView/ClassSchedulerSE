@@ -11,8 +11,14 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Add Curriculum</title>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+        <link rel = "stylesheet" type = "text/css" href = "design/styles.css">
     </head>
     <body>
+    <div class = "main-header">
+    	<img src = "design/architecture.png" height = "85" width = "85" style = "float: left" alt = "arch_logo">
+        <h1>COLLEGE OF ARCHITECTURE</h1>
+        <h5>CLASS SCHEDULER</h5>
+    </div>
         <form action="AddCurriculumServletArki" method="post">
             <table class="table table-borderless">
             <tr>
